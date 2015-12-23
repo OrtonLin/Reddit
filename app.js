@@ -20,6 +20,11 @@ app.config(function($routeProvider) {
 app.controller('MainController', function($scope, $firebaseArray,Posts) {
   $scope.posts = Posts;
   $scope.savePost = function(post) {
+    if(post === undefined || post.name === undefined || post.description === undefined || post.url === undefined)
+    {
+      alert("Sorry bro you need all of those inputs to be filled!")
+      return;
+    }
     Posts.$add({
       name: post.name,
       description: post.description,
