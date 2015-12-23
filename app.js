@@ -23,13 +23,17 @@ app.controller('MainController', function($scope, $firebaseArray,Posts) {
     Posts.$add({
       name: post.name,
       description: post.description,
-      url: post.url
+      url: post.url,
+      votes:0
     });
     post.name = "";
     post.description = "";
     post.url = "";
   }
-
+  $scope.addVote = function(post){
+    post.votes++;
+    Posts.$save(post);
+  }
   $scope.deletePost = function(post){
     var postForDeletion =  new Firebase("https://reddit-chat-ortonlin.firebaseio.com/" + post.$id);
     postForDeletion.remove();
