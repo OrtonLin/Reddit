@@ -29,4 +29,9 @@ app.controller('MainController', function($scope, $firebaseArray,Posts) {
     post.description = "";
     post.url = "";
   }
+
+  $scope.deletePost = function(post){
+    var postForDeletion =  new Firebase("https://reddit-chat-ortonlin.firebaseio.com/" + post.$id);
+    postForDeletion.remove();
+  }
 });
