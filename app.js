@@ -43,4 +43,17 @@ app.controller('MainController', function($scope, $firebaseArray,Posts) {
     var postForDeletion =  new Firebase("https://reddit-chat-ortonlin.firebaseio.com/" + post.$id);
     postForDeletion.remove();
   }
+  $scope.login = function(){
+    var ref = new Firebase("https://reddit-chat-ortonlin.firebaseio.com/");
+    ref.authWithOAuthPopup('twitter',function(error, authData){
+      if(error){
+        alert('Sorry bro, there was an error.');
+      }
+      else {
+        alert('You were logged in successfully');
+      }
+      $scope.authData = authData;
+    })
+  }
+
 });
