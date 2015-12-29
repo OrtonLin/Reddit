@@ -20,16 +20,17 @@ app.config(function($routeProvider) {
 app.controller('MainController', function($scope, $firebaseArray,Posts) {
   $scope.posts = Posts;
   $scope.savePost = function(post) {
-    if(post === undefined || post.name === undefined || post.description === undefined || post.url === undefined)
+    if(post === undefined || post.name === undefined || post.description === undefined || post.url === undefined || !$scope.authData)
     {
-      alert("Sorry bro you need all of those inputs to be filled!")
+      alert("Sorry bro you need all of those inputs to be filled or you need to be logged in!")
       return;
     }
     Posts.$add({
       name: post.name,
       description: post.description,
       url: post.url,
-      votes:0
+      votes:0,
+      user:$scope.authData.twitter.username
     });
     post.name = "";
     post.description = "";
@@ -50,7 +51,7 @@ app.controller('MainController', function($scope, $firebaseArray,Posts) {
         alert('Sorry bro, there was an error.');
       }
       else {
-        alert('You were logged in successfully');
+        alert('You were logged in successfully with ' + authData.twitter.username);
       }
       $scope.authData = authData;
     })
