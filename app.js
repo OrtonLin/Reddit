@@ -54,10 +54,16 @@ app.controller('MainController', function($scope, $firebaseArray,Posts) {
         user:$scope.authData.twitter.username,
         text:comment.text
       });
+      comment.text = "";
     }
     else{
       alert('You need to be logged in before doing that!');
     }
+  }
+
+  $scope.removeComment = function(post,comment){
+    var commentForDeletion = new Firebase("https://reddit-chat-ortonlin.firebaseio.com/" + post.$id +"/comments/" + comment.$id);
+    commentForDeletion.remove();
   }
 
   $scope.login = function(){
