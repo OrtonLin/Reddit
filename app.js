@@ -44,6 +44,22 @@ app.controller('MainController', function($scope, $firebaseArray,Posts) {
     var postForDeletion =  new Firebase("https://reddit-chat-ortonlin.firebaseio.com/" + post.$id);
     postForDeletion.remove();
   }
+  $scope.addComment = function(post, comment){
+    if($scope.authData){
+      var ref = new Firebase("https://reddit-chat-ortonlin.firebaseio.com/" + post.$id +"/comments");
+      //var sync = $firebase(ref);
+      //$scope.comments = sync.$asArray();
+      $scope.comments = $firebaseArray(ref);
+      $scope.comments.$add({
+        user:$scope.authData.twitter.username,
+        text:comment.text
+      });
+    }
+    else{
+      alert('You need to be logged in before doing that!');
+    }
+  }
+
   $scope.login = function(){
     var ref = new Firebase("https://reddit-chat-ortonlin.firebaseio.com/");
     ref.authWithOAuthPopup('twitter',function(error, authData){
